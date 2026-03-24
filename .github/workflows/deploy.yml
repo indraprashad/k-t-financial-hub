@@ -20,14 +20,50 @@ jobs:
           node-version: '22'
           cache: 'yarn'
       
-      - name: Install dependencies
+      - name: Clean install dependencies
         run: yarn install --frozen-lockfile
       
       - name: Build
         run: yarn build
       
+      - name: Verify dist directory exists
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "ERROR: dist directory not found!"
+            exit 1
+          fi
+          echo "✓ dist directory exists"
+      
+      - name: Verify index.html exists
+        run: |
+          if [ ! -f "dist/index.html" ]; then
+            echo "ERROR: dist/index.html not found!"
+            exit 1
+          fi
+          echo "✓ dist/index.html exists"
+      
       - name: List dist contents
-        run: ls -la dist/
+        run: |
+          echo "=== Dist Directory Contents ==="
+          ls -lah dist/
+          echo ""
+          echo "=== Total size ==="
+          du -sh dist/
+          echo ""
+          echo "=== File count ==="
+          find dist -type f | wc -l
+          echo "files found"
+      
+      - name: Validate dist structure
+        run: |
+          echo "=== Checking critical files ==="
+          for file in index.html assets; do
+            if [ -e "dist/$file" ]; then
+              echo "✓ $file found"
+            else
+              echo "⚠ WARNING: $file not found"
+            fi
+          done
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
