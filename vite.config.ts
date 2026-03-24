@@ -19,5 +19,5 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
-  base: '/', // Base path for GitHub Pages
+  base: '/k-t-financial-hub/', // Base path for GitHub Pages
 }));
