@@ -1,6 +1,14 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/k-t-financial-hub/',
-  // other configurations...
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+  base: '/k-t-financial-hub/', // Base path for GitHub Pages
 });
