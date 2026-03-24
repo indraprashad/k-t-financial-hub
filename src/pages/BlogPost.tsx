@@ -81,15 +81,17 @@ export default function BlogPost() {
       {/* Hero */}
       <section className="bg-primary pt-32 pb-0">
         <div className="container-wide max-w-4xl">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Blog
-          </Link>
-          <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4 ${categoryColors[post.category]}`}>
-            {post.category}
-          </span>
+          <div className="flex flex-col gap-4 mb-6">
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-fit"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Blog
+            </Link>
+            <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${categoryColors[post.category]}`}>
+              {post.category}
+            </span>
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">{post.title}</h1>
           <div className="flex flex-wrap items-center gap-4 text-white/60 text-sm pb-8">
             <span className="flex items-center gap-1.5"><User className="w-4 h-4" />{post.author}</span>

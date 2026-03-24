@@ -32,8 +32,6 @@ const services = [
   "Tax Filing & Compliance",
   "Business Advisory & Consultancy",
   "Financial Planning & Budgeting",
-  "Payroll Management",
-  "Business Registration Support",
   "General Inquiry",
 ];
 
@@ -62,12 +60,12 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-center gap-2 mb-1">
+        <DialogHeader className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-1">
             <CalendarDays className="w-5 h-5 text-accent" />
             <DialogTitle className="text-primary text-xl">Book a Free Consultation</DialogTitle>
           </div>
-          <DialogDescription>
+          <DialogDescription className="text-center">
             Fill in your details and we'll get back to you within 24 hours to confirm your appointment.
           </DialogDescription>
         </DialogHeader>
@@ -82,7 +80,7 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
                   <FormItem>
                     <FormLabel>Full Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Smith" {...field} />
+                      <Input placeholder="Full Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,7 +93,7 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
                   <FormItem>
                     <FormLabel>Phone Number *</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (123) 456-7890" {...field} />
+                      <Input placeholder="Phone Number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,7 +108,7 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
                 <FormItem>
                   <FormLabel>Email Address *</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="john@example.com" {...field} />
+                    <Input type="email" placeholder="Email Address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

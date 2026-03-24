@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BookConsultationModal from "./BookConsultationModal";
+import logo from "@/assets/logo-removebg.png";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -38,12 +39,10 @@ export default function Navbar() {
         <nav className="container-wide flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center shadow-gold">
-              <TrendingUp className="w-5 h-5 text-white" />
-            </div>
+            <img src={logo} alt="K & T Financial Consultancy" className="h-12 w-12 object-contain bg-white rounded-lg p-1" />
             <div>
-              <span className="text-white font-bold text-lg leading-tight block">K & T</span>
-              <span className="text-accent text-xs leading-tight block tracking-wide">Financial Consultancy</span>
+              <span className="text-white font-bold text-lg leading-tight block font-Garamond">K & T</span>
+              <span className="text-accent text-xs leading-tight block tracking-wide font-Garamond">Financial Consultancy</span>
             </div>
           </Link>
 

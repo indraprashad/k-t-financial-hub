@@ -134,7 +134,7 @@ export default function Index() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold text-base px-8"
+                className="border-white/30 text-white bg-white/10 font-semibold text-base px-8"
               >
                 <Link to="/services">Explore Our Services</Link>
               </Button>
@@ -363,7 +363,7 @@ export default function Index() {
               asChild
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white/10 font-semibold text-base px-8"
+              className="border-white text-white bg-white/10 font-semibold text-base px-8"
             >
               <Link to="/contact">Get In Touch</Link>
             </Button>
