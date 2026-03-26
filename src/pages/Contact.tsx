@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getContent } from "@/lib/contentStore";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
