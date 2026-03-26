@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getContent } from "@/lib/contentStore";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -19,31 +20,19 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Office Address",
-    lines: ["123 Financial District", "Business Avenue, Suite 500", "City, State 10001"],
-  },
-  {
-    icon: Phone,
-    title: "Phone Numbers",
-    lines: ["+975 17836510"],
-  },
-  {
-    icon: Mail,
-    title: "Email Addresses",
-    lines: ["ktfinancialconsultancy26@gmail.com"],
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    lines: ["Mon – Fri: 9:00 AM – 5:00 PM", "Saturday: 9:00 AM – 1:00 PM", "Sunday: Closed"],
-  },
-];
+
 
 export default function Contact() {
   const { toast } = useToast();
+  const { phone, email, address, hours, mapSrc } = getContent().contact;
+
+  const contactInfo = [
+    { icon: MapPin, title: "Office Address", lines: address },
+    { icon: Phone, title: "Phone Numbers", lines: [phone] },
+    { icon: Mail, title: "Email Addresses", lines: [email] },
+    { icon: Clock, title: "Office Hours", lines: hours },
+  ];
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
@@ -183,16 +172,16 @@ export default function Contact() {
               <span className="text-accent font-semibold text-sm uppercase tracking-widest">Find Us</span>
               <h2 className="text-3xl font-bold text-primary mt-2 mb-6">Our Location</h2>
               <div className="rounded-2xl overflow-hidden shadow-navy h-64 sm:h-80 md:h-96 mb-6">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d283.849568359296!2d89.6386228280219!3d27.51130468617822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1staba%20kd%20shops!5e0!3m2!1sen!2sbt!4v1774332802855!5m2!1sen!2sbt"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="K & T Financial Consultancy Location"
-                />
+                 <iframe
+                   src={mapSrc}
+                   width="100%"
+                   height="100%"
+                   style={{ border: 0 }}
+                   allowFullScreen
+                   loading="lazy"
+                   referrerPolicy="no-referrer-when-downgrade"
+                   title="K & T Financial Consultancy Location"
+                 />
               </div>
 
               {/* Social */}

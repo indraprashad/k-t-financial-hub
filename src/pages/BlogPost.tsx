@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, User, Tag, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { blogPosts } from "./Blog";
+import { getContent } from "@/lib/contentStore";
 
 const articleContent: Record<string, string[]> = {
   "top-tax-tips-small-business": [
@@ -41,6 +41,7 @@ const articleContent: Record<string, string[]> = {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
+  const blogPosts = getContent().blog;
   const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
