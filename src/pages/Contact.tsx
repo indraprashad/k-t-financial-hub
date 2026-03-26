@@ -45,6 +45,15 @@ const contactInfo = [
 
 export default function Contact() {
   const { toast } = useToast();
+  const { phone, email, address, hours, mapSrc } = getContent().contact;
+
+  const contactInfo = [
+    { icon: MapPin, title: "Office Address", lines: address },
+    { icon: Phone, title: "Phone Numbers", lines: [phone] },
+    { icon: Mail, title: "Email Addresses", lines: [email] },
+    { icon: Clock, title: "Office Hours", lines: hours },
+  ];
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "", message: "" },
