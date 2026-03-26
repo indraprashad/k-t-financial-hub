@@ -20,28 +20,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Office Address",
-    lines: ["123 Financial District", "Business Avenue, Suite 500", "City, State 10001"],
-  },
-  {
-    icon: Phone,
-    title: "Phone Numbers",
-    lines: ["+975 17836510"],
-  },
-  {
-    icon: Mail,
-    title: "Email Addresses",
-    lines: ["ktfinancialconsultancy26@gmail.com"],
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    lines: ["Mon – Fri: 9:00 AM – 5:00 PM", "Saturday: 9:00 AM – 1:00 PM", "Sunday: Closed"],
-  },
-];
+
 
 export default function Contact() {
   const { toast } = useToast();
