@@ -41,6 +41,7 @@ const articleContent: Record<string, string[]> = {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
+  const blogPosts = getContent().blog;
   const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
