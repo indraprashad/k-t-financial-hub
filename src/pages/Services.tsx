@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Calculator, ClipboardList, FileText, BarChart2, TrendingUp,
   Users, Building2, CheckCircle2, ArrowRight, Download
@@ -7,13 +7,44 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookConsultationModal from "@/components/BookConsultationModal";
-import { getContent } from "@/lib/contentStore";
+import { getContent, ServiceItem } from "@/lib/contentStore";
 
 const ICONS = [Calculator, ClipboardList, FileText, BarChart2, TrendingUp, Users, Building2];
 
 export default function Services() {
   const [modalOpen, setModalOpen] = useState(false);
-  const services = getContent().services;
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const siteContent = await getContent();
+        setServices(siteContent.services);
+      } catch (error) {
+        console.error('Error loading services content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading services...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>

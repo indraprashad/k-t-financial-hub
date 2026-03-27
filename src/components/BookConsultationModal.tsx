@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { CalendarDays, Loader2 } from "lucide-react";
-import { getContent } from "@/lib/contentStore";
+import { getContent, ConsultationContent } from "@/lib/contentStore";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -37,7 +37,27 @@ interface Props {
 export default function BookConsultationModal({ open, onOpenChange }: Props) {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
-  const services = getContent().consultation.services;
+  const [consultationContent, setConsultationContent] = useState<ConsultationContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const content = await getContent();
+        setConsultationContent(content.consultation);
+      } catch (error) {
+        console.error('Error loading consultation content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (open) {
+      loadContent();
+    }
+  }, [open]);
+
+  const services = consultationContent?.services || [];
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -47,8 +67,12 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
   const onSubmit = async (data: FormValues) => {
     setSubmitting(true);
     try {
+      const notificationEmail = consultationContent?.notificationEmail || "indraprashadsharma4@gmail.com";
       const { error } = await supabase.functions.invoke("notify-consultation", {
-        body: data,
+        body: {
+          ...data,
+          notificationEmail,
+        },
       });
 
       if (error) throw error;
@@ -85,8 +109,16 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-2">
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="text-center">
+              <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2 text-primary" />
+              <p className="text-muted-foreground text-sm">Loading services...</p>
+            </div>
+          </div>
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -202,6 +234,7 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
             </Button>
           </form>
         </Form>
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getContent } from "@/lib/contentStore";
+import { getContent, ContactContent } from "@/lib/contentStore";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -24,7 +24,40 @@ type FormValues = z.infer<typeof schema>;
 
 export default function Contact() {
   const { toast } = useToast();
-  const { phone, email, address, hours, mapSrc } = getContent().contact;
+  const [contact, setContact] = useState<ContactContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const siteContent = await getContent();
+        setContact(siteContent.contact);
+      } catch (error) {
+        console.error('Error loading contact content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (loading || !contact) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading contact information...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const { phone, email, address, hours, mapSrc } = contact;
 
   const contactInfo = [
     { icon: MapPin, title: "Office Address", lines: address },

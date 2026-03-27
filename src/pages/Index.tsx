@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookConsultationModal from "@/components/BookConsultationModal";
-import { getContent } from "@/lib/contentStore";
+import { getContent, HomeContent } from "@/lib/contentStore";
 
 const SERVICE_ICONS = [Calculator, ClipboardList, FileText, BarChart2, TrendingUp, Users, Building2];
 const WHY_ICONS = [Shield, Clock, Users, Award];
@@ -18,18 +18,63 @@ const WHY_ICONS = [Shield, Clock, Users, Award];
 export default function Index() {
   const [current, setCurrent] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const content = getContent().home;
-  const { hero, stats, services, whyUs, testimonials, faqs, cta } = content;
+  const [content, setContent] = useState<HomeContent | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const next = useCallback(() => setCurrent((c) => (c + 1) % testimonials.length), [testimonials.length]);
-  const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
+  // Move all hooks before any conditional logic
+  const next = useCallback(() => {
+    if (!content) return;
+    setCurrent((c) => (c + 1) % content.testimonials.length);
+  }, [content?.testimonials.length]);
+  
+  const prev = useCallback(() => {
+    if (!content) return;
+    setCurrent((c) => (c - 1 + content.testimonials.length) % content.testimonials.length);
+  }, [content?.testimonials.length]);
 
   useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const homeContent = await getContent();
+        setContent(homeContent.home);
+      } catch (error) {
+        console.error('Error loading home content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  useEffect(() => {
+    if (!content) return;
     const id = setInterval(next, 5000);
     return () => clearInterval(id);
-  }, [next]);
+  }, [next, content]);
 
-  const t = testimonials[current] ?? testimonials[0];
+  if (loading || !content) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading content...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const { hero, stats, services, whyUs, testimonials, faqs, cta } = content;
+  const t = testimonials[current] ?? testimonials[0] ?? {
+    name: "Loading...",
+    role: "",
+    text: "Loading testimonials...",
+    rating: 5
+  };
 
   return (
     <>
@@ -207,7 +252,7 @@ export default function Index() {
             <div className="bg-card border rounded-2xl p-8 md:p-12 shadow-navy relative">
               <div className="text-accent text-5xl leading-none font-serif absolute top-6 left-8 opacity-30">"</div>
               <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
+                {Array.from({ length: Math.max(0, Math.min(5, t.rating || 0)) }).map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-accent text-accent" />
                 ))}
               </div>
@@ -263,8 +308,8 @@ export default function Index() {
       <section className="section-padding bg-accent">
         <div className="container-wide text-center">
           <BookOpen className="w-12 h-12 text-white/80 mx-auto mb-4" />
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{cta.title}</h2>
-          <p className="text-white/80 text-lg max-w-xl mx-auto mb-8">{cta.subtitle}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{cta[0]?.title || "Ready to Take Control of Your Finances?"}</h2>
+          <p className="text-white/80 text-lg max-w-xl mx-auto mb-8">{cta[0]?.subtitle || "Book a free, no-obligation consultation with our expert team today and take the first step toward financial clarity."}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button onClick={() => setModalOpen(true)} size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold text-base px-8">
               Book Free Consultation

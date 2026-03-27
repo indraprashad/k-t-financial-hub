@@ -1,22 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Clock, Tag, ArrowRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getContent } from "@/lib/contentStore";
-
-const categories = ["All", "Tax", "Accounting", "Business"];
-const categoryColors: Record<string, string> = {
-  Tax: "bg-blue-100 text-blue-700",
-  Accounting: "bg-green-100 text-green-700",
-  Business: "bg-amber-100 text-amber-700",
-};
+import { getContent, BlogPost, BlogCategory } from "@/lib/contentStore";
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
-  const blogPosts = getContent().blog;
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const siteContent = await getContent();
+        setBlogPosts(siteContent.blog);
+        
+        // Extract unique categories from blog posts
+        const uniqueCategories = [...new Set(siteContent.blog.map(post => post.category))];
+        setCategories(["All", ...uniqueCategories]);
+      } catch (error) {
+        console.error('Error loading blog content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading blog posts...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const categoryColors: Record<string, string> = {
+    Tax: "bg-blue-100 text-blue-700",
+    Accounting: "bg-green-100 text-green-700",
+    Business: "bg-amber-100 text-amber-700",
+  };
 
   const filtered = blogPosts.filter((p) => {
     const matchCat = activeCategory === "All" || p.category === activeCategory;

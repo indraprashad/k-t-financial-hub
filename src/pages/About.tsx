@@ -4,14 +4,47 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookConsultationModal from "@/components/BookConsultationModal";
-import { useState } from "react";
-import { getContent } from "@/lib/contentStore";
+import { useState, useEffect } from "react";
+import { getContent, AboutContent } from "@/lib/contentStore";
 
 const VALUE_ICONS = [Shield, Award, Users, Clock];
 
 export default function About() {
   const [modalOpen, setModalOpen] = useState(false);
-  const { hero, story, mission, vision, team, milestones } = getContent().about;
+  const [content, setContent] = useState<AboutContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const siteContent = await getContent();
+        setContent(siteContent.about);
+      } catch (error) {
+        console.error('Error loading about content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (loading || !content) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading content...</p>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const { hero, story, mission, vision, team, milestones } = content;
 
   const values = [
     { icon: Shield, title: "Integrity", text: "We operate with unwavering honesty and ethical standards in every engagement." },

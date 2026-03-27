@@ -14,6 +14,227 @@ export type Database = {
   }
   public: {
     Tables: {
+      about_content: {
+        Row: {
+          bio: string | null
+          content_type: string
+          created_at: string
+          heading: string | null
+          id: string
+          image: string | null
+          item_index: number
+          mission: string | null
+          name: string | null
+          paragraphs: string[] | null
+          role: string | null
+          subtitle: string | null
+          text: string | null
+          updated_at: string
+          vision: string | null
+          year: string | null
+        }
+        Insert: {
+          bio?: string | null
+          content_type: string
+          created_at?: string
+          heading?: string | null
+          id?: string
+          image?: string | null
+          item_index?: number
+          mission?: string | null
+          name?: string | null
+          paragraphs?: string[] | null
+          role?: string | null
+          subtitle?: string | null
+          text?: string | null
+          updated_at?: string
+          vision?: string | null
+          year?: string | null
+        }
+        Update: {
+          bio?: string | null
+          content_type?: string
+          created_at?: string
+          heading?: string | null
+          id?: string
+          image?: string | null
+          item_index?: number
+          mission?: string | null
+          name?: string | null
+          paragraphs?: string[] | null
+          role?: string | null
+          subtitle?: string | null
+          text?: string | null
+          updated_at?: string
+          vision?: string | null
+          year?: string | null
+        }
+        Relationships: []
+      }
+      admin_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          preferences: Json | null
+          role: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          preferences?: Json | null
+          role?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          preferences?: Json | null
+          role?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      blog_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          body: string | null
+          category_id: string | null
+          created_at: string
+          excerpt: string | null
+          featured: boolean | null
+          id: string
+          image: string | null
+          published: boolean | null
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          category_id?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          id?: string
+          image?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          category_id?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          id?: string
+          image?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_contact: {
+        Row: {
+          additional_info: string | null
+          address: string | null
+          content_type: string
+          created_at: string
+          email: string | null
+          google_maps_url: string | null
+          id: string
+          item_index: number
+          office_hours: Json | null
+          phone: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          additional_info?: string | null
+          address?: string | null
+          content_type?: string
+          created_at?: string
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string
+          item_index?: number
+          office_hours?: Json | null
+          phone?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          additional_info?: string | null
+          address?: string | null
+          content_type?: string
+          created_at?: string
+          email?: string | null
+          google_maps_url?: string | null
+          id?: string
+          item_index?: number
+          office_hours?: Json | null
+          phone?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       consultation_bookings: {
         Row: {
           created_at: string
@@ -44,6 +265,123 @@ export type Database = {
           phone?: string
           preferred_date?: string
           service?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
+      home_content: {
+        Row: {
+          content_type: string
+          created_at: string
+          description: string | null
+          heading: string | null
+          id: string
+          item_index: number
+          label: string | null
+          subtitle: string | null
+          text: string | null
+          title: string | null
+          updated_at: string
+          value: string | null
+        }
+        Insert: {
+          content_type: string
+          created_at?: string
+          description?: string | null
+          heading?: string | null
+          id?: string
+          item_index?: number
+          label?: string | null
+          subtitle?: string | null
+          text?: string | null
+          title?: string | null
+          updated_at?: string
+          value?: string | null
+        }
+        Update: {
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          heading?: string | null
+          id?: string
+          item_index?: number
+          label?: string | null
+          subtitle?: string | null
+          text?: string | null
+          title?: string | null
+          updated_at?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
+      services_content: {
+        Row: {
+          content_type: string
+          created_at: string
+          description: string | null
+          features: string[] | null
+          id: string
+          image: string | null
+          item_index: number
+          service_id: string
+          tagline: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          image?: string | null
+          item_index?: number
+          service_id: string
+          tagline?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          image?: string | null
+          item_index?: number
+          service_id?: string
+          tagline?: string | null
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }

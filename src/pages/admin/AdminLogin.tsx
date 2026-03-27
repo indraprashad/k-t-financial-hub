@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Lock, User, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { adminLogin } from "@/lib/contentStore";
+import { signIn } from "@/lib/contentStore";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -13,19 +13,20 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    setTimeout(() => {
-      const ok = adminLogin(username.trim(), password);
-      if (ok) {
-        navigate("/admin/dashboard", { replace: true });
-      } else {
-        setError("Invalid username or password.");
-        setLoading(false);
-      }
-    }, 400);
+    
+    try {
+      await signIn(username.trim(), password);
+      navigate("/admin/dashboard", { replace: true });
+    } catch (error) {
+      console.error('Login error:', error);
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,12 +51,12 @@ export default function AdminLogin() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-foreground">Username</label>
+              <label className="text-sm font-medium text-foreground">Email</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  type="text"
-                  placeholder="Enter username"
+                  type="email"
+                  placeholder="Enter email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="pl-9"
