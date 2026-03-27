@@ -66,12 +66,18 @@ export interface ContactContent {
   mapSrc: string;
 }
 
+export interface ConsultationContent {
+  services: string[];
+  notificationEmail: string;
+}
+
 export interface SiteContent {
   home: HomeContent;
   about: AboutContent;
   services: ServiceItem[];
   blog: BlogPost[];
   contact: ContactContent;
+  consultation: ConsultationContent;
 }
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
