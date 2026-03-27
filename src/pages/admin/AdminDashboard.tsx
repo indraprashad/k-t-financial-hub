@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { adminLogout, getContent, saveContent, resetContent, SiteContent, BlogPost, ServiceItem, ConsultationContent } from "@/lib/contentStore";
 import { useToast } from "@/hooks/use-toast";
 
-type Tab = "home" | "about" | "services" | "blog" | "contact";
+type Tab = "home" | "about" | "services" | "blog" | "contact" | "consultation";
 
 const NAV: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "home", label: "Home", icon: Home },
@@ -19,6 +19,7 @@ const NAV: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "services", label: "Services", icon: Briefcase },
   { id: "blog", label: "Blog", icon: FileText },
   { id: "contact", label: "Contact", icon: Phone },
+  { id: "consultation", label: "Consultation", icon: CalendarDays },
 ];
 
 // ─── Small field helpers ──────────────────────────────────────────────────────
