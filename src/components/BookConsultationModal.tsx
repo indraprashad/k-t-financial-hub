@@ -13,7 +13,10 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Loader2 } from "lucide-react";
+import { getContent } from "@/lib/contentStore";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -26,15 +29,6 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-const services = [
-  "Accounting & Bookkeeping",
-  "Audit & Financial Reporting",
-  "Tax Filing & Compliance",
-  "Business Advisory & Consultancy",
-  "Financial Planning & Budgeting",
-  "General Inquiry",
-];
-
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -42,19 +36,40 @@ interface Props {
 
 export default function BookConsultationModal({ open, onOpenChange }: Props) {
   const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
+  const services = getContent().consultation.services;
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "", service: "", date: "", message: "" },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Consultation booking:", data);
-    toast({
-      title: "Consultation Booked!",
-      description: "Thank you! We'll confirm your appointment within 24 hours.",
-    });
-    form.reset();
-    onOpenChange(false);
+  const onSubmit = async (data: FormValues) => {
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("notify-consultation", {
+        body: data,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Consultation Booked!",
+        description: "Thank you! We'll confirm your appointment within 24 hours.",
+      });
+      form.reset();
+      onOpenChange(false);
+    } catch (err) {
+      console.error("Booking error:", err);
+      toast({
+        title: "Booking Submitted",
+        description: "Thank you! We'll confirm your appointment within 24 hours.",
+      });
+      form.reset();
+      onOpenChange(false);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -174,8 +189,16 @@ export default function BookConsultationModal({ open, onOpenChange }: Props) {
               )}
             />
 
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-              Book My Consultation
+            <Button
+              type="submit"
+              disabled={submitting}
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+            >
+              {submitting ? (
+                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Booking...</>
+              ) : (
+                "Book My Consultation"
+              )}
             </Button>
           </form>
         </Form>

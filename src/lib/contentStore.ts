@@ -66,12 +66,18 @@ export interface ContactContent {
   mapSrc: string;
 }
 
+export interface ConsultationContent {
+  services: string[];
+  notificationEmail: string;
+}
+
 export interface SiteContent {
   home: HomeContent;
   about: AboutContent;
   services: ServiceItem[];
   blog: BlogPost[];
   contact: ContactContent;
+  consultation: ConsultationContent;
 }
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
@@ -182,6 +188,17 @@ const DEFAULT: SiteContent = {
     hours: ["Mon – Fri: 9:00 AM – 5:00 PM", "Saturday: 9:00 AM – 1:00 PM", "Sunday: Closed"],
     mapSrc: "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d283.849568359296!2d89.6386228280219!3d27.51130468617822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1staba%20kd%20shops!5e0!3m2!1sen!2sbt!4v1774332802855!5m2!1sen!2sbt",
   },
+  consultation: {
+    services: [
+      "Accounting & Bookkeeping",
+      "Audit & Financial Reporting",
+      "Tax Filing & Compliance",
+      "Business Advisory & Consultancy",
+      "Financial Planning & Budgeting",
+      "General Inquiry",
+    ],
+    notificationEmail: "indraprashadsharma4@gmail.com",
+  },
 };
 
 const STORAGE_KEY = "kt_site_content";
@@ -198,6 +215,7 @@ export function getContent(): SiteContent {
         services: parsed.services ?? DEFAULT.services,
         blog: parsed.blog ?? DEFAULT.blog,
         contact: { ...DEFAULT.contact, ...parsed.contact },
+        consultation: { ...DEFAULT.consultation, ...parsed.consultation },
       };
     }
   } catch (_) { /* ignore */ }
