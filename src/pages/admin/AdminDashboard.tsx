@@ -489,6 +489,7 @@ export default function AdminDashboard() {
             {activeTab === "services" && <ServicesTab data={content.services} onChange={v => update("services", v)} />}
             {activeTab === "blog" && <BlogTab data={content.blog} onChange={v => update("blog", v)} />}
             {activeTab === "contact" && <ContactTab data={content.contact} onChange={v => update("contact", v)} />}
+            {activeTab === "consultation" && <ConsultationTab data={content.consultation} onChange={v => update("consultation", v)} />}
           </div>
         </main>
       </div>
