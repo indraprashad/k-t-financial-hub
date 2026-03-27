@@ -363,6 +363,33 @@ function ContactTab({ data, onChange }: { data: SiteContent["contact"]; onChange
   );
 }
 
+// ─── CONSULTATION TAB ────────────────────────────────────────────────────────
+function ConsultationTab({ data, onChange }: { data: ConsultationContent; onChange: (d: ConsultationContent) => void }) {
+  return (
+    <div className="space-y-6">
+      <SectionCard title="Notification Settings">
+        <Field label="Notification Email (receives booking alerts)">
+          <Input type="email" value={data.notificationEmail} onChange={e => onChange({ ...data, notificationEmail: e.target.value })} />
+        </Field>
+      </SectionCard>
+
+      <SectionCard title="Services List (shown in booking form dropdown)">
+        {data.services.map((s, i) => (
+          <div key={i} className="flex gap-2">
+            <Input value={s} onChange={e => { const arr = [...data.services]; arr[i] = e.target.value; onChange({ ...data, services: arr }); }} />
+            <Button variant="ghost" size="icon" className="text-destructive shrink-0" onClick={() => onChange({ ...data, services: data.services.filter((_, j) => j !== i) })}>
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+        ))}
+        <Button variant="outline" size="sm" className="border-dashed w-full" onClick={() => onChange({ ...data, services: [...data.services, "New Service"] })}>
+          <Plus className="w-3.5 h-3.5 mr-1" /> Add Service Option
+        </Button>
+      </SectionCard>
+    </div>
+  );
+}
+
 // ─── MAIN DASHBOARD ──────────────────────────────────────────────────────────
 export default function AdminDashboard() {
   const navigate = useNavigate();
