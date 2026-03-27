@@ -215,6 +215,7 @@ export function getContent(): SiteContent {
         services: parsed.services ?? DEFAULT.services,
         blog: parsed.blog ?? DEFAULT.blog,
         contact: { ...DEFAULT.contact, ...parsed.contact },
+        consultation: { ...DEFAULT.consultation, ...parsed.consultation },
       };
     }
   } catch (_) { /* ignore */ }
