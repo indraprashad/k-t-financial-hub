@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { adminLogout, getContent, saveContent, resetContent, SiteContent, BlogPost, ServiceItem } from "@/lib/contentStore";
+import { adminLogout, getContent, saveContent, resetContent, SiteContent, BlogPost, ServiceItem, ConsultationContent } from "@/lib/contentStore";
 import { useToast } from "@/hooks/use-toast";
 
 type Tab = "home" | "about" | "services" | "blog" | "contact";
