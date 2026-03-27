@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard, Home, Info, Briefcase, FileText, Phone,
+  LayoutDashboard, Home, Info, Briefcase, FileText, Phone, CalendarDays,
   LogOut, Save, Plus, Trash2, ChevronDown, ChevronUp, ExternalLink,
   RefreshCw, AlertCircle
 } from "lucide-react";
