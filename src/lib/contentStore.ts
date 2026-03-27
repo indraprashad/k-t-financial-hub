@@ -231,8 +231,8 @@ export function resetContent() {
 }
 
 // ─── Auth helpers ─────────────────────────────────────────────────────────────
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "ktadmin2024";
+const ADMIN_USER = "td@dcpl.bt";
+const ADMIN_PASS = "Dcpl@123";
 const SESSION_KEY = "kt_admin_session";
 
 export function adminLogin(username: string, password: string): boolean {
