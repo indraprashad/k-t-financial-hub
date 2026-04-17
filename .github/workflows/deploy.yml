@@ -64,11 +64,17 @@ jobs:
               echo "⚠ WARNING: $file not found"
             fi
           done
-      
+
+      - name: Copy .nojekyll to dist
+        run: |
+          cp .nojekyll dist/.nojekyll
+          echo "✓ Copied .nojekyll to dist"
+          ls -la dist/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: false
+          cname: www.kt-info.com
           force_orphan: true
