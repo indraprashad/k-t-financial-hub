@@ -1,48 +1,92 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import NotFound from "./pages/NotFound";
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import ProfilePage from "./pages/admin/ProfilePage";
-import ChangePassword from "./pages/admin/ChangePassword";
-import AdminGuard from "./components/admin/AdminGuard";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import useCombinedReducers from "use-combined-reducers";
+import { Toaster as Sonner } from "@/common/ui/sonner";
+import { Toaster } from "@/common/ui/toaster";
+import { TooltipProvider } from "@/common/ui/tooltip";
+import NotFound from "./common/NotFound";
+import { routes } from "./routes/routes";
+import {
+  commonReducer,
+  initialUser,
+  loaderReducer,
+  loaderStateReducer,
+  loaderValue,
+  snackbarReducer,
+  snackbarValue,
+  userReducer,
+} from "./reducers";
+import { DispatchContext, StateContext } from "./store/app-context";
+import { useReducer } from "react";
+import { ApiUtils } from "./utils/ApiUtils";
+import { protectedRoutes } from "./routes/protected-route";
+import ProtectedMain from "./admin/main/ProtectedMain";
+import { LandingPage } from "./view/landing/landing-page";
+import Login from "./auth/login";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          {/* Admin routes — no link in public UI */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
-          <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
-          <Route path="/admin/profile" element={<AdminGuard><ProfilePage /></AdminGuard>} />
-          <Route path="/admin/change-password" element={<AdminGuard><ChangePassword /></AdminGuard>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [state, dispatch] = useCombinedReducers({
+    user: useReducer(userReducer, initialUser),
+    notifyMessage: useReducer(snackbarReducer, snackbarValue),
+    loader: useReducer(loaderReducer, loaderValue),
+    loaderState: useReducer(loaderStateReducer, false),
+    commonUpdate: useReducer(commonReducer, { change: false }),
+  });
+
+  ApiUtils.dispatch = dispatch;
+  ApiUtils.state = state;
+  ApiUtils.navigate = (path: string) => {
+    console.log('Navigating to:', path);
+  };
+
+  return (
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state as any}>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                {routes.length > 0 &&
+                  routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      element={<route.component />}
+                      path={route.path}
+                    />
+                  ))}
+
+                <Route
+                  path="/admin"
+                  element={
+                    (state as any)?.user?.authenticated ? (
+                      <ProtectedMain />
+                    ) : (
+                      <Navigate to={"/"} replace />
+                    )
+                  }
+                >
+                  {protectedRoutes.map((route, index) => (
+                    <Route
+                      key={index}
+                      element={<route.component />}
+                      path={route.path}
+                    />
+                  ))}
+                </Route>
+                <Route path="*" element={<NotFound />} />
+                <Route path="/login" element={<Login />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </StateContext.Provider>
+    </DispatchContext.Provider>
+  );
+};
 
 export default App;
