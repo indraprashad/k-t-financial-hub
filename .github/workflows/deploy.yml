@@ -25,6 +25,8 @@ jobs:
       
       - name: Build
         run: yarn build
+        env:
+          VITE_API_URL: https://boss004.pythonanywhere.com/api
       
       - name: Verify dist directory exists
         run: |
