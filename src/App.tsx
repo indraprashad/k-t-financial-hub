@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import useCombinedReducers from "use-combined-reducers";
 import { Toaster as Sonner } from "@/common/ui/sonner";
 import { Toaster } from "@/common/ui/toaster";
@@ -48,7 +48,7 @@ const App = () => {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 {routes.length > 0 &&
@@ -81,7 +81,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/login" element={<Login />} />
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </TooltipProvider>
         </QueryClientProvider>
       </StateContext.Provider>
