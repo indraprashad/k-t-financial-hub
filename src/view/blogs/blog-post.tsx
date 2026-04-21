@@ -129,13 +129,13 @@ export const BlogPost = () => {
                             {categories.map(cat => (
                                 <button
                                     key={cat.id}
-                                    onClick={() => setSelectedCategory(cat.id)}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === cat.id
+                                    onClick={() => setSelectedCategory(cat.attributes.name)}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === cat.attributes.name
                                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                                         : 'bg-white text-slate-600 hover:bg-slate-100 hover:shadow-sm'
                                         }`}
                                 >
-                                    {cat.name}
+                                    {cat.attributes.name}
                                 </button>
                             ))}
                         </div>
