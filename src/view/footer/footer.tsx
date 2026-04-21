@@ -94,12 +94,12 @@ export const Footer = () => {
                             <li className="flex items-start gap-3 group">
                                 <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                                 <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">
-                                    123 Financial Street<br />Sydney, NSW 2000
+                                    GJ6Q+GG Thimphu<br />Thimphu, Bhutan 11001
                                 </span>
                             </li>
                             <li className="flex items-center gap-3 group">
                                 <Phone className="w-5 h-5 text-blue-500 shrink-0 group-hover:scale-110 transition-transform" />
-                                <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">+61 2 1234 5678</span>
+                                <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">+975 17836510</span>
                             </li>
                             <li className="flex items-center gap-3 group">
                                 <Mail className="w-5 h-5 text-blue-500 shrink-0 group-hover:scale-110 transition-transform" />

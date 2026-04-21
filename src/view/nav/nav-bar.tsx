@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/common/ui/button';
 import logoImage from '@/assets/logo1.png';
+import { useNavigate } from 'react-router-dom';
 
 const navLinks = [
     { name: 'Home', id: 'home' },
@@ -14,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
+    const navigate = useNavigate();
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
@@ -57,7 +59,7 @@ export default function Navbar() {
 
                     {/* CTA Button */}
                     <div className="hidden md:block">
-                        <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white gap-2 shadow-md shadow-blue-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5">
+                        <Button onClick={() => navigate('/booking')} className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white gap-2 shadow-md shadow-blue-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5">
                             <Phone className="w-4 h-4" />
                             <span>Book Consultation</span>
                         </Button>
@@ -92,7 +94,9 @@ export default function Navbar() {
                                 </button>
                             ))}
                             <div className="pt-2 px-4">
-                                <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white gap-2 shadow-md shadow-blue-500/20">
+                                <Button 
+                                onClick={() => navigate('/booking')}
+                                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white gap-2 shadow-md shadow-blue-500/20">
                                     <Phone className="w-4 h-4" />
                                     <span>Book Consultation</span>
                                 </Button>
