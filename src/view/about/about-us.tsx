@@ -94,6 +94,9 @@ export const AboutUs = () => {
                                         src={hero.attributes.image}
                                         alt=""
                                         className="relative w-full h-96 lg:h-[500px] object-cover rounded-2xl shadow-2xl shadow-slate-900/10 hover:shadow-amber-500/20 transition-shadow duration-500"
+                                        loading="lazy"
+                                        width={680}
+                                        height={382}
                                     />
                                 ) : (
                                     <div className="relative w-full h-96 lg:h-[500px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center">

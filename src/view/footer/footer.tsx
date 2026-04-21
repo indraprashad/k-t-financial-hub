@@ -37,7 +37,7 @@ export const Footer = () => {
                     <div className="lg:col-span-1">
                         <div className="flex items-center gap-2 mb-4 group cursor-pointer" onClick={() => scrollToSection('#home')}>
                             <div className="transition-transform duration-300 group-hover:scale-105">
-                                <img src={logoImage} alt="K&T Financial" className="w-20 h-20 object-contain" />
+                                <img src={logoImage} alt="K&T Financial" className="w-20 h-20 object-contain" width={80} height={80} />
                             </div>
                         </div>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6">

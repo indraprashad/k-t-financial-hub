@@ -35,7 +35,7 @@ export default function Navbar() {
                         className="flex items-center gap-2 group"
                     >
                         <div className="transition-transform duration-300 group-hover:scale-105">
-                            <img src={logoImage} alt="K&T Financial" className="w-20 h-20" />
+                            <img src={logoImage} alt="K&T Financial" className="w-20 h-20" width={80} height={80} />
                         </div>
                     </button>
 

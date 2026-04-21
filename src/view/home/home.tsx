@@ -193,6 +193,9 @@ export default function Home() {
                                         src={hero.attributes.image.attributes.url}
                                         alt="Hero"
                                         className="relative w-full h-auto rounded-2xl shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow duration-500"
+                                        fetchPriority="high"
+                                        width={1168}
+                                        height={656}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-2xl pointer-events-none" />
                                 </div>

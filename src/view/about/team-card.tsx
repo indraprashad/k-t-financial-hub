@@ -13,6 +13,9 @@ export const TeamCard = ({ member }: TeamCardProps) => (
                     src={member.attributes.image}
                     alt={member.attributes.name}
                     className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                    width={400}
+                    height={288}
                 />
             ) : (
                 <div className="w-full h-72 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
