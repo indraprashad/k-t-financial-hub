@@ -10,5 +10,14 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+
+# Disallow admin and private routes
+Disallow: /admin/
+Disallow: /login/
+
+Sitemap: https://kt-info.com/sitemap.xml

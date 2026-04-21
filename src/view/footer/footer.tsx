@@ -31,12 +31,14 @@ export const Footer = () => {
     };
 
     return (
-        <footer className="bg-slate-900 text-white">
+        <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     <div className="lg:col-span-1">
-                        <div className="flex items-center gap-2 mb-1 ml-20">
-                            <img src={logoImage} alt="K&T Financial" className="w-20 h-20 object-contain" />
+                        <div className="flex items-center gap-2 mb-4 group cursor-pointer" onClick={() => scrollToSection('#home')}>
+                            <div className="transition-transform duration-300 group-hover:scale-105">
+                                <img src={logoImage} alt="K&T Financial" className="w-20 h-20 object-contain" />
+                            </div>
                         </div>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6">
                             Your trusted partner for comprehensive financial consultancy services. We help businesses thrive through expert guidance.
@@ -46,7 +48,7 @@ export const Footer = () => {
                                 <a
                                     key={i}
                                     href="#"
-                                    className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 flex items-center justify-center transition-colors"
+                                    className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-700 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30"
                                 >
                                     <Icon className="w-4 h-4" />
                                 </a>
@@ -61,7 +63,7 @@ export const Footer = () => {
                                 <li key={link.name}>
                                     <button
                                         onClick={() => scrollToSection(link.href)}
-                                        className="text-slate-400 hover:text-white text-sm transition-colors"
+                                        className="text-slate-400 hover:text-white hover:translate-x-1 text-sm transition-all duration-300 text-left"
                                     >
                                         {link.name}
                                     </button>
@@ -77,7 +79,7 @@ export const Footer = () => {
                                 <li key={link.name}>
                                     <button
                                         onClick={() => scrollToSection(link.href)}
-                                        className="text-slate-400 hover:text-white text-sm transition-colors"
+                                        className="text-slate-400 hover:text-white hover:translate-x-1 text-sm transition-all duration-300 text-left"
                                     >
                                         {link.name}
                                     </button>
@@ -89,26 +91,26 @@ export const Footer = () => {
                     <div>
                         <h3 className="font-semibold text-white mb-4">Contact Info</h3>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3">
-                                <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-                                <span className="text-slate-400 text-sm">
+                            <li className="flex items-start gap-3 group">
+                                <MapPin className="w-5 h-5 text-blue-500 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                                <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">
                                     123 Financial Street<br />Sydney, NSW 2000
                                 </span>
                             </li>
-                            <li className="flex items-center gap-3">
-                                <Phone className="w-5 h-5 text-blue-500 shrink-0" />
-                                <span className="text-slate-400 text-sm">+61 2 1234 5678</span>
+                            <li className="flex items-center gap-3 group">
+                                <Phone className="w-5 h-5 text-blue-500 shrink-0 group-hover:scale-110 transition-transform" />
+                                <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">+61 2 1234 5678</span>
                             </li>
-                            <li className="flex items-center gap-3">
-                                <Mail className="w-5 h-5 text-blue-500 shrink-0" />
-                                <span className="text-slate-400 text-sm">info@ktfinancial.com</span>
+                            <li className="flex items-center gap-3 group">
+                                <Mail className="w-5 h-5 text-blue-500 shrink-0 group-hover:scale-110 transition-transform" />
+                                <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors">info@ktfinancial.com</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div className="border-t border-slate-800">
+            <div className="border-t border-slate-800/50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-slate-500 text-sm">
@@ -119,7 +121,7 @@ export const Footer = () => {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className="text-slate-500 hover:text-white text-sm transition-colors"
+                                    className="text-slate-500 hover:text-white hover:translate-y-[-2px] text-sm transition-all duration-300"
                                 >
                                     {link.name}
                                 </a>

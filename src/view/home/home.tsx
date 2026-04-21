@@ -100,24 +100,26 @@ export default function Home() {
         <div className="min-h-screen bg-slate-50">
             {/* Hero Section */}
             {hero && (
-                <section className="relative min-h-[90vh] flex items-center bg-slate-900 overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute inset-0" style={{
+                <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+                    {/* Animated Background Pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                        <div className="absolute inset-0 animate-pulse" style={{
                             backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
                             backgroundSize: '40px 40px'
                         }} />
                     </div>
-                    <div className="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-blue-600/20 to-transparent" />
-                    <div className="absolute left-0 bottom-0 w-1/2 h-1/2 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-full blur-3xl" />
+                    <div className="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-blue-600/30 to-transparent animate-in fade-in duration-1000" />
+                    <div className="absolute left-0 bottom-0 w-1/2 h-1/2 bg-gradient-to-tr from-amber-500/20 to-transparent rounded-full blur-3xl animate-in fade-in duration-1000 delay-200" />
+                    <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+                    <div className="absolute bottom-20 left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse delay-500" />
 
                     <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                         <div className="grid lg:grid-cols-2 gap-12 items-center">
                             {/* Left Content */}
-                            <div className="space-y-6">
+                            <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-700">
                                 {/* Badge */}
                                 {hero.attributes?.heading && (
-                                    <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-1.5 mb-6 animate-fade-in">
+                                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-full px-4 py-1.5 mb-6 hover:scale-105 transition-transform cursor-default">
                                         <Award className="w-4 h-4 text-amber-400" />
                                         <span className="text-amber-400 text-sm font-medium uppercase tracking-wide">{hero.attributes.heading}</span>
                                     </div>
@@ -127,7 +129,7 @@ export default function Home() {
                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                                     {hero?.attributes?.title}
                                     {hero.attributes?.text && (
-                                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+                                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 animate-gradient-x">
                                             {hero.attributes.text}
                                         </span>
                                     )}
@@ -150,15 +152,15 @@ export default function Home() {
                                     <Button
                                         onClick={() => window.location.href = '/booking'}
                                         size="lg"
-                                        className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-base px-8 shadow-lg shadow-amber-500/25 transition-all hover:scale-105"
+                                        className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold text-base px-8 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40"
                                     >
                                         Get Started
-                                        <ArrowRight className="w-4 h-4 ml-2" />
+                                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                     <Button
                                         size="lg"
                                         variant="outline"
-                                        className="border-slate-600 text-white bg-slate-800/50 hover:bg-slate-800 font-semibold text-base px-8 transition-all"
+                                        className="border-slate-600 text-white bg-slate-800/50 hover:bg-slate-800 hover:border-slate-500 font-semibold text-base px-8 transition-all duration-300 hover:-translate-y-0.5"
                                     >
                                         Learn More
                                     </Button>
@@ -172,9 +174,9 @@ export default function Home() {
                                             return (
                                                 <div
                                                     key={index}
-                                                    className="flex items-center gap-2 text-slate-400 text-sm hover:text-slate-300 transition-colors"
+                                                    className="flex items-center gap-2 text-slate-400 text-sm hover:text-slate-300 transition-colors cursor-default group"
                                                 >
-                                                    {getBadgeIcon(badge)}
+                                                    <span className="group-hover:scale-110 transition-transform">{getBadgeIcon(badge)}</span>
                                                     <span>{badgeText}</span>
                                                 </div>
                                             );
@@ -185,13 +187,14 @@ export default function Home() {
 
                             {/* Right Image */}
                             {hero?.attributes?.image?.attributes?.url && (
-                                <div className="relative">
+                                <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+                                    <div className="absolute -inset-4 bg-gradient-to-r from-amber-400/20 to-blue-500/20 rounded-[2.5rem] blur-2xl animate-pulse" />
                                     <img
                                         src={hero.attributes.image.attributes.url}
                                         alt="Hero"
-                                        className="w-full h-auto rounded-2xl shadow-2xl shadow-amber-500/20"
+                                        className="relative w-full h-auto rounded-2xl shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow duration-500"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/20 to-transparent rounded-2xl pointer-events-none" />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-2xl pointer-events-none" />
                                 </div>
                             )}
                         </div>
@@ -201,10 +204,10 @@ export default function Home() {
                     {stats.length > 0 && (
                         <button
                             onClick={scrollToStats}
-                            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-all duration-300 cursor-pointer group"
                         >
-                            <span className="text-xs uppercase tracking-widest">Explore</span>
-                            <ChevronDown className="w-5 h-5 animate-bounce" />
+                            <span className="text-xs uppercase tracking-widest group-hover:translate-y-[-2px] transition-transform">Explore</span>
+                            <ChevronDown className="w-5 h-5 animate-bounce group-hover:animate-bounce-fast" />
                         </button>
                     )}
                 </section>
@@ -214,7 +217,7 @@ export default function Home() {
             {stats.length > 0 && (
                 <section id="stats-section" className="relative -mt-20 z-20 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-6xl mx-auto">
-                        <Card className="bg-white shadow-2xl shadow-slate-900/10 border-0">
+                        <Card className="bg-white shadow-2xl shadow-slate-900/10 border-0 hover:shadow-3xl hover:shadow-slate-900/15 transition-shadow duration-500">
                             <CardContent className="p-8 md:p-12">
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                                     {stats.map((s, index) => {
@@ -244,11 +247,11 @@ export default function Home() {
                                         };
 
                                         return (
-                                            <div key={s.attributes?.label || index} className="text-center group">
-                                                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-50 to-amber-50 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <div key={s.attributes?.label || index} className="text-center group cursor-default">
+                                                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-50 to-amber-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm group-hover:shadow-md">
                                                     {getStatIcon()}
                                                 </div>
-                                                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1">
+                                                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
                                                     {s.attributes?.value}
                                                 </div>
                                                 <div className="text-slate-500 text-sm font-medium uppercase tracking-wide">
