@@ -22,7 +22,7 @@ export default function Home() {
     useEffect(() => {
         const fetchContent = async () => {
             try {
-                const data = await homeContentApi.getAll({page, per_page: perPage});
+                const data = await homeContentApi.getAll({ page, per_page: perPage });
                 setContent(data?.data);
             } catch (err) {
                 setError('Failed to load home content');
@@ -116,7 +116,7 @@ export default function Home() {
                     <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                         <div className="grid lg:grid-cols-2 gap-12 items-center">
                             {/* Left Content */}
-                            <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-700">
+                            <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-700 flex flex-col items-center lg:items-start text-center lg:text-left">
                                 {/* Badge */}
                                 {hero.attributes?.heading && (
                                     <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/40 rounded-full px-4 py-2 hover:scale-105 transition-transform cursor-default shadow-sm shadow-amber-500/10">
@@ -148,9 +148,9 @@ export default function Home() {
                                 )}
 
                                 {/* CTA Buttons */}
-                                <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                                <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start w-full">
                                     <Button
-                                        onClick={() => window.location.href = '/booking'}
+                                        onClick={() => window.location.href = '#booking'}
                                         size="lg"
                                         className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 font-bold text-base px-8 rounded-xl shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40 group"
                                     >
@@ -158,6 +158,7 @@ export default function Home() {
                                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                     <Button
+                                        onClick={() => window.location.href = '#contact'}
                                         size="lg"
                                         variant="outline"
                                         className="border-slate-500/70 text-slate-200 bg-white/5 hover:bg-white/10 hover:border-slate-400 hover:text-white font-semibold text-base px-8 rounded-xl transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
@@ -168,7 +169,7 @@ export default function Home() {
 
                                 {/* Trust Badges */}
                                 {hero?.attributes?.trust_badge && hero.attributes.trust_badge.length > 0 && (
-                                    <div className="flex flex-wrap items-center gap-5 pt-8 border-t border-slate-700/40">
+                                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 pt-8 border-t border-slate-700/40 w-full">
                                         {hero.attributes.trust_badge.map((badge, index) => {
                                             const badgeText = typeof badge === 'string' ? badge : badge.text || '';
                                             return (
@@ -220,7 +221,7 @@ export default function Home() {
 
             {/* Stats Section */}
             {stats.length > 0 && (
-                <section id="stats-section" className="relative -mt-20 z-20 px-4 sm:px-6 lg:px-8">
+                <section id="stats-section" className="relative -mt-8 lg:-mt-20 z-20 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-6xl mx-auto">
                         <Card className="bg-white shadow-2xl shadow-slate-900/10 border-0 overflow-hidden">
                             <div className="h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-blue-500" />

@@ -158,11 +158,11 @@ export const TermsOfService = () => {
                                 </Button>
                                 <Button
                                     variant="outline"
-                                    onClick={() => window.open('mailto:legal@ktfinancial.com')}
+                                    onClick={() => window.open('mailto:ktfinancialconsultancy26@gmail.com')}
                                     className="border-blue-600 text-blue-600 hover:bg-blue-50"
                                 >
                                     <Mail className="w-4 h-4 mr-2" />
-                                    legal@ktfinancial.com
+                                    ktfinancialconsultancy26@gmail.com
                                 </Button>
                             </div>
                         </div>

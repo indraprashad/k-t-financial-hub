@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import logoImage from '@/assets/logo1.png';
 import { servicesContentApi, ServicesContent } from '@/services/service';
@@ -10,6 +10,17 @@ export const Footer = () => {
     const currentYear = new Date().getFullYear();
     const [services, setServices] = useState<ServicesContent[]>([]);
     const [contact, setContact] = useState<BusinessContact | null>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const footerRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+            { threshold: 0.1 }
+        );
+        if (footerRef.current) observer.observe(footerRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,11 +60,11 @@ export const Footer = () => {
     };
 
     return (
-        <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+        <footer ref={footerRef} className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
             <div className="h-1 bg-gradient-to-r from-amber-400 via-blue-500 to-indigo-500" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                    <div className="lg:col-span-1">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                    <div className={`col-span-2 lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left transition-all duration-700 delay-[0ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                         <div className="flex items-center gap-2 mb-4 group cursor-pointer" onClick={() => scrollToSection('#home')}>
                             <div className="transition-transform duration-300 group-hover:scale-105">
                                 <img src={logoImage} alt="K&T Financial" className="w-20 h-20 object-contain" width={80} height={80} />
@@ -75,7 +86,7 @@ export const Footer = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className={`transition-all duration-700 delay-[150ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                         <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
                             <span className="w-4 h-0.5 bg-amber-400 rounded-full" />
                             Company
@@ -93,7 +104,7 @@ export const Footer = () => {
                                                 window.open(link.href, '_blank');
                                             }
                                         }}
-                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300 text-left"
+                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300"
                                     >
                                         {link.name}
                                     </button>
@@ -102,17 +113,17 @@ export const Footer = () => {
                         </ul>
                     </div>
 
-                    <div>
+                    <div className={`flex flex-col items-center lg:items-start text-center lg:text-left transition-all duration-700 delay-[300ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                         <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
                             <span className="w-4 h-0.5 bg-amber-400 rounded-full" />
                             Services
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-3 flex flex-col items-center lg:items-start">
                             {services.slice(0, 4).map((service) => (
                                 <li key={service.id}>
                                     <button
                                         onClick={() => navigate(`/service/${service.id}`)}
-                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300 text-left"
+                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300"
                                     >
                                         {service.attributes.title}
                                     </button>
@@ -122,7 +133,7 @@ export const Footer = () => {
                                 <li>
                                     <button
                                         onClick={() => navigate('/services')}
-                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300 text-left font-semibold"
+                                        className="text-slate-400 hover:text-amber-300 hover:translate-x-1.5 text-sm transition-all duration-300 font-semibold"
                                     >
                                         View All Services →
                                     </button>
@@ -131,7 +142,7 @@ export const Footer = () => {
                         </ul>
                     </div>
 
-                    <div>
+                    <div className={`transition-all duration-700 delay-[450ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                         <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
                             <span className="w-4 h-0.5 bg-amber-400 rounded-full" />
                             Contact Info
@@ -142,7 +153,7 @@ export const Footer = () => {
                                     <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center shrink-0 group-hover:bg-blue-600/30 transition-colors">
                                         <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
                                     </div>
-                                    <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors whitespace-pre-line leading-relaxed mt-1">
+                                    <span className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors whitespace-pre-line leading-relaxed mt-1 text-left">
                                         {contact.attributes.address}
                                     </span>
                                 </li>
@@ -173,7 +184,7 @@ export const Footer = () => {
                 </div>
             </div>
 
-            <div className="border-t border-slate-700/40">
+            <div className={`border-t border-slate-700/40 transition-all duration-700 delay-[600ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-slate-500 text-sm">

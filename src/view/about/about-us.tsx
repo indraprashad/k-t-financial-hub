@@ -14,7 +14,7 @@ export const AboutUs = () => {
     const [content, setContent] = useState<AboutContent[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [page, setPage] = useState(1)
+    const [page] = useState(1)
     const perPage = 100
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export const AboutUs = () => {
                     <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse" />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
-                            <div className="space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
+                            <div className="space-y-8 animate-in fade-in slide-in-from-left-8 duration-700 flex flex-col items-center lg:items-start text-center lg:text-left">
                                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-100/50 to-amber-200/50 rounded-full hover:scale-105 transition-transform cursor-default">
                                     <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
                                     <span className="text-amber-700 font-semibold text-sm tracking-wider uppercase">Our Story</span>
@@ -106,11 +106,11 @@ export const AboutUs = () => {
                                 <div className="absolute -bottom-8 -right-8 bg-white rounded-2xl p-6 shadow-xl shadow-slate-900/10 border border-slate-100 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300">
                                     <div className="flex items-center gap-4">
                                         <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <Users className="w-7 h-7 text-white" />
+                                            <Award className="w-7 h-7 text-white" />
                                         </div>
                                         <div>
-                                            <div className="text-3xl font-bold text-slate-900">500+</div>
-                                            <div className="text-sm text-slate-500">Happy Clients</div>
+                                            <div className="text-3xl font-bold text-slate-900 leading-tight">10+</div>
+                                            <div className="text-sm text-amber-500 font-semibold">Years of Experience</div>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@ export const AboutUs = () => {
                         <div className="grid md:grid-cols-2 gap-8">
                             {hero?.attributes?.mission && (
                                 <Card className="group border-0 shadow-lg shadow-slate-900/5 hover:shadow-2xl hover:shadow-amber-900/10 hover:-translate-y-1 transition-all duration-500 bg-gradient-to-br from-white to-slate-50/50">
-                                    <CardContent className="p-10">
+                                    <CardContent className="p-10 flex flex-col items-center md:items-start text-center md:text-left">
                                         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                                             <TrendingUp className="w-8 h-8 text-amber-600" />
                                         </div>
@@ -137,7 +137,7 @@ export const AboutUs = () => {
                             )}
                             {hero?.attributes?.vision && (
                                 <Card className="group border-0 shadow-lg shadow-slate-900/5 hover:shadow-2xl hover:shadow-amber-900/10 hover:-translate-y-1 transition-all duration-500 bg-gradient-to-br from-white to-slate-50/50">
-                                    <CardContent className="p-10">
+                                    <CardContent className="p-10 flex flex-col items-center md:items-start text-center md:text-left">
                                         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                                             <Eye className="w-8 h-8 text-amber-600" />
                                         </div>
@@ -197,7 +197,7 @@ export const AboutUs = () => {
                                 Milestones that shaped who we are today.
                             </p>
                         </div>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
                             {timeline.map((e) => <TimelineCard key={e.id} event={e} />)}
                         </div>
                     </div>

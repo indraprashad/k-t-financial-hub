@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/common/ui/button';
 import logoImage from '@/assets/logo1.png';
@@ -16,12 +16,56 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
+    const lastScrollY = useRef(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 30);
+        const handleScroll = () => {
+            const current = window.scrollY;
+            setScrolled(current > 30);
+            setHidden(current > lastScrollY.current && current > 80);
+            lastScrollY.current = current;
+        };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Close mobile menu on scroll, but delay registration to avoid
+    // spurious scroll events that fire right after the menu opens
+    useEffect(() => {
+        if (!isOpen) return;
+        const close = () => setIsOpen(false);
+        const timer = setTimeout(() => {
+            window.addEventListener('scroll', close, { passive: true, once: true });
+        }, 150);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('scroll', close);
+        };
+    }, [isOpen]);
+
+    useEffect(() => {
+        const observers: IntersectionObserver[] = [];
+
+        navLinks.forEach(({ id }) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) setActiveSection(id);
+                },
+                // shrink detection zone to the middle 40% of the viewport
+                // so tall sections (taller than viewport) still trigger correctly
+                { rootMargin: '-30% 0px -30% 0px', threshold: 0 }
+            );
+
+            observer.observe(el);
+            observers.push(observer);
+        });
+
+        return () => observers.forEach((o) => o.disconnect());
     }, []);
 
     const scrollToSection = (id: string) => {
@@ -35,7 +79,7 @@ export default function Navbar() {
     const isActive = (id: string) => activeSection === id;
 
     return (
-        <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md border-b border-slate-100' : 'bg-white/90 backdrop-blur-md border-b border-slate-100/50'}`}>
+        <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md border-b border-slate-100' : 'bg-white/90 backdrop-blur-md border-b border-slate-100/50'} ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}

@@ -54,12 +54,26 @@ export const Services = () => {
                             const Icon = ICONS[index % ICONS.length];
                             return (
                                 <Card key={service.id} className="group relative border-0 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white overflow-hidden rounded-2xl">
-                                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                    <CardContent className="p-8 relative">
-                                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-md group-hover:shadow-lg shadow-blue-500/20">
-                                            <Icon className="w-7 h-7 text-white" />
+                                    {service.attributes.image ? (
+                                        <div className="relative h-48 overflow-hidden">
+                                            <img
+                                                src={service.attributes.image}
+                                                alt={service.attributes.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                loading="lazy"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
                                         </div>
+                                    ) : (
+                                        <div className="px-8 pt-8">
+                                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-md group-hover:shadow-lg shadow-blue-500/20">
+                                                <Icon className="w-7 h-7 text-white" />
+                                            </div>
+                                        </div>
+                                    )}
+                                    <CardContent className="p-8 relative">
                                         <h3 className="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-blue-600 transition-colors">{service.attributes.title}</h3>
                                         <p className="text-blue-500 font-semibold text-sm mb-4 tracking-wide">{service.attributes.tagline}</p>
                                         <p className="text-slate-500 mb-6 text-sm leading-relaxed">{service.attributes.description}</p>
