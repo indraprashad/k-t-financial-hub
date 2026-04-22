@@ -83,7 +83,7 @@ export default function BookConsultation() {
                                                 required
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                placeholder="John Doe"
+                                                placeholder="Enter your name"
                                                 className="focus:ring-2 focus:ring-blue-500 transition-shadow h-12"
                                             />
                                         </div>
@@ -97,7 +97,7 @@ export default function BookConsultation() {
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="john@example.com"
+                                                placeholder="Enter your email"
                                                 className="focus:ring-2 focus:ring-blue-500 transition-shadow h-12"
                                             />
                                         </div>
@@ -113,7 +113,7 @@ export default function BookConsultation() {
                                                 required
                                                 value={formData.phone}
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                                                placeholder="+1 234 567 8900"
+                                                placeholder="+975 12345678"
                                                 className="focus:ring-2 focus:ring-blue-500 transition-shadow h-12"
                                             />
                                         </div>
