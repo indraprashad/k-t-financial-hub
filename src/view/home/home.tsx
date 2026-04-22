@@ -119,17 +119,17 @@ export default function Home() {
                             <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-700">
                                 {/* Badge */}
                                 {hero.attributes?.heading && (
-                                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-full px-4 py-1.5 mb-6 hover:scale-105 transition-transform cursor-default">
-                                        <Award className="w-4 h-4 text-amber-400" />
-                                        <span className="text-amber-400 text-sm font-medium uppercase tracking-wide">{hero.attributes.heading}</span>
+                                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/40 rounded-full px-4 py-2 hover:scale-105 transition-transform cursor-default shadow-sm shadow-amber-500/10">
+                                        <Award className="w-4 h-4 text-amber-400 shrink-0" />
+                                        <span className="text-amber-300 text-sm font-semibold uppercase tracking-widest">{hero.attributes.heading}</span>
                                     </div>
                                 )}
 
                                 {/* Title */}
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
                                     {hero?.attributes?.title}
                                     {hero.attributes?.text && (
-                                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 animate-gradient-x">
+                                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 mt-1">
                                             {hero.attributes.text}
                                         </span>
                                     )}
@@ -137,7 +137,7 @@ export default function Home() {
 
                                 {/* Subtitle */}
                                 {hero.attributes?.subtitle && (
-                                    <p className="text-slate-300 text-lg md:text-xl leading-relaxed max-w-2xl break-words">
+                                    <p className="text-slate-200 text-lg md:text-xl leading-relaxed max-w-2xl break-words font-light">
                                         {hero.attributes.subtitle}
                                     </p>
                                 )}
@@ -148,11 +148,11 @@ export default function Home() {
                                 )}
 
                                 {/* CTA Buttons */}
-                                <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="flex flex-col sm:flex-row gap-4 pt-2">
                                     <Button
                                         onClick={() => window.location.href = '/booking'}
                                         size="lg"
-                                        className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold text-base px-8 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40"
+                                        className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 font-bold text-base px-8 rounded-xl shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40 group"
                                     >
                                         Get Started
                                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -160,7 +160,7 @@ export default function Home() {
                                     <Button
                                         size="lg"
                                         variant="outline"
-                                        className="border-slate-600 text-white bg-slate-800/50 hover:bg-slate-800 hover:border-slate-500 font-semibold text-base px-8 transition-all duration-300 hover:-translate-y-0.5"
+                                        className="border-slate-500/70 text-slate-200 bg-white/5 hover:bg-white/10 hover:border-slate-400 hover:text-white font-semibold text-base px-8 rounded-xl transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
                                     >
                                         Learn More
                                     </Button>
@@ -168,16 +168,16 @@ export default function Home() {
 
                                 {/* Trust Badges */}
                                 {hero?.attributes?.trust_badge && hero.attributes.trust_badge.length > 0 && (
-                                    <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-slate-700/50">
+                                    <div className="flex flex-wrap items-center gap-5 pt-8 border-t border-slate-700/40">
                                         {hero.attributes.trust_badge.map((badge, index) => {
                                             const badgeText = typeof badge === 'string' ? badge : badge.text || '';
                                             return (
                                                 <div
                                                     key={index}
-                                                    className="flex items-center gap-2 text-slate-400 text-sm hover:text-slate-300 transition-colors cursor-default group"
+                                                    className="flex items-center gap-2 text-slate-400 text-sm hover:text-slate-200 transition-colors cursor-default group"
                                                 >
                                                     <span className="group-hover:scale-110 transition-transform">{getBadgeIcon(badge)}</span>
-                                                    <span>{badgeText}</span>
+                                                    <span className="font-medium">{badgeText}</span>
                                                 </div>
                                             );
                                         })}
@@ -188,16 +188,18 @@ export default function Home() {
                             {/* Right Image */}
                             {hero?.attributes?.image?.attributes?.url && (
                                 <div className="relative animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-                                    <div className="absolute -inset-4 bg-gradient-to-r from-amber-400/20 to-blue-500/20 rounded-[2.5rem] blur-2xl animate-pulse" />
-                                    <img
-                                        src={hero.attributes.image.attributes.url}
-                                        alt="Hero"
-                                        className="relative w-full h-auto rounded-2xl shadow-2xl shadow-amber-500/20 hover:shadow-amber-500/30 transition-shadow duration-500"
-                                        fetchPriority="high"
-                                        width={1168}
-                                        height={656}
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-2xl pointer-events-none" />
+                                    <div className="absolute -inset-6 bg-gradient-to-r from-amber-400/15 to-blue-500/15 rounded-[2.5rem] blur-3xl" />
+                                    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-slate-900/50 ring-1 ring-white/10">
+                                        <img
+                                            src={hero.attributes.image.attributes.url}
+                                            alt="Hero"
+                                            className="w-full h-auto hover:scale-[1.02] transition-transform duration-700"
+                                            fetchPriority="high"
+                                            width={1168}
+                                            height={656}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-blue-500/10 pointer-events-none" />
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -220,9 +222,10 @@ export default function Home() {
             {stats.length > 0 && (
                 <section id="stats-section" className="relative -mt-20 z-20 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-6xl mx-auto">
-                        <Card className="bg-white shadow-2xl shadow-slate-900/10 border-0 hover:shadow-3xl hover:shadow-slate-900/15 transition-shadow duration-500">
-                            <CardContent className="p-8 md:p-12">
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <Card className="bg-white shadow-2xl shadow-slate-900/10 border-0 overflow-hidden">
+                            <div className="h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-blue-500" />
+                            <CardContent className="p-8 md:p-10">
+                                <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100">
                                     {stats.map((s, index) => {
                                         const getStatIcon = () => {
                                             if (s.attributes?.icon) {
@@ -231,7 +234,6 @@ export default function Home() {
                                                     return <IconComponent className="w-6 h-6" />;
                                                 }
                                             }
-                                            // Fallback to index-based icons
                                             if (index === 0) return <Users className="w-6 h-6 text-blue-600" />;
                                             if (index === 1) return <Award className="w-6 h-6 text-amber-600" />;
                                             if (index === 2) return <Clock className="w-6 h-6 text-emerald-600" />;
@@ -240,9 +242,8 @@ export default function Home() {
 
                                         const getIconColor = () => {
                                             if (s.attributes?.icon) {
-                                                return 'text-blue-600'; // Default color for custom icons
+                                                return 'text-blue-600';
                                             }
-                                            // Return colors for fallback icons
                                             if (index === 0) return 'text-blue-600';
                                             if (index === 1) return 'text-amber-600';
                                             if (index === 2) return 'text-emerald-600';
@@ -250,14 +251,14 @@ export default function Home() {
                                         };
 
                                         return (
-                                            <div key={s.attributes?.label || index} className="text-center group cursor-default">
-                                                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-50 to-amber-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm group-hover:shadow-md">
+                                            <div key={s.attributes?.label || index} className="text-center group cursor-default py-6 md:py-0 md:px-8 first:pt-0 last:pb-0 md:first:pl-0 md:last:pr-0">
+                                                <div className={`w-12 h-12 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-sm group-hover:shadow-md ${getIconColor()}`}>
                                                     {getStatIcon()}
                                                 </div>
-                                                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                                                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors duration-300 tracking-tight">
                                                     {s.attributes?.value}
                                                 </div>
-                                                <div className="text-slate-500 text-sm font-medium uppercase tracking-wide">
+                                                <div className="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">
                                                     {s.attributes?.label}
                                                 </div>
                                             </div>
